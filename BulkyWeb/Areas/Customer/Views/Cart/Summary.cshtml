@@ -26,7 +26,7 @@
 									<span class="text-info">Shipping Details:</span>
 								</h4>
 							</div>
-							@* <div class="row my-1">
+							<div class="row my-1">
 								<div class="col-3">
 									<label>Name</label>
 								</div>
@@ -79,14 +79,14 @@
 									<input asp-for="OrderHeader.PostalCode" class="form-control" />
 									<span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
 								</div>
-							</div> *@
+							</div>
 						</div>
 						<div class="col-12 col-lg-5 offset-lg-1">
 							<h4 class="d-flex justify-content-between align-items-center mb-3">
 								<span class="text-info">Order Summary:</span>
 							</h4>
 							<ul class="list-group mb-3">
-								@foreach(var details in Model.ShoppingCartList){
+								@foreach(var details in Model.ShoppingCartList) {
 								<li class="list-group-item d-flex justify-content-between">
 									<div>
 											<h6 class="my-0">@details.Product.Title</h6>
@@ -95,11 +95,11 @@
 									<span class="text-muted">@((details.Price*details.Count).ToString("c")) </span>
 								</li>
 								}
-@* 
+
 								<li class="list-group-item d-flex justify-content-between bg-light">
 									<small class="text-info">Total (USD)</small>
 									<strong class="text-info">@Model.OrderHeader.OrderTotal.ToString("c")</strong>
-								</li> *@
+								</li>
 							</ul>
 						</div>
 					</div>
