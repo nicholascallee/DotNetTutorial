@@ -55,6 +55,9 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
             }
+            TempData["success"] = "Cart Updated Successfully";
+
+
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }
