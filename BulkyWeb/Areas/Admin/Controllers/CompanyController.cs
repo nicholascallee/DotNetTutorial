@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+    //[Authorize(Roles = SD.Role_Admin)]
 
     public class CompanyController : Controller
     {
@@ -47,8 +47,6 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-
                 if (CompanyObj.Id == 0)
                 {
                     _unitOfWork.Company.Add(CompanyObj);
@@ -60,7 +58,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
 
                 _unitOfWork.Save();
-                TempData["success"] = "Company created successfully";
+                TempData["success"] = "Company updated successfully";
                 return RedirectToAction("Index");
             }
             else
