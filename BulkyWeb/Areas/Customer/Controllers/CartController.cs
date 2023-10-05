@@ -135,7 +135,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //customer account so we need to capture payment
-                var domain = "https://localhost:7049/";
+                var domain = Request.Scheme + "://" + Request.Host.Value +"/";
                 var options = new SessionCreateOptions
                 {
                     SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
