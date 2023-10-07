@@ -29,7 +29,6 @@ namespace BulkyBook.DataAccess.Repository
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
-            ProductImage = new ProductImageRepository(_db);
             Category = new CategoryRepository(_db);
             ShoppingCart = new ShoppingCartRepository(_db);
             Product = new ProductRepository(_db);
@@ -37,6 +36,7 @@ namespace BulkyBook.DataAccess.Repository
             ApplicationUser = new ApplicationUserRepository(_db);
             OrderDetail = new OrderDetailRepository(_db);
             OrderHeader = new OrderHeaderRepository(_db);
+            ProductImage = new ProductImageRepository(_db);
         }
 
         public void Save()
