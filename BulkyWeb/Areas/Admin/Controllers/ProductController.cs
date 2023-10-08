@@ -1,10 +1,12 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using BulkyBook.Models;
 using BulkyBook.Models.ViewModels;
 using BulkyBook.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Stripe;
 using System.Collections.Generic;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
@@ -25,7 +27,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
+            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
             return View(objProductList);
         }
 
@@ -39,7 +41,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
-                Product = new Product()
+                Product = new BulkyBook.Models.Product()
             };
             if(id==null || id == 0)
             {
@@ -125,7 +127,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return Json(new { data =  objProductList });
         }
 
@@ -137,13 +139,23 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
+            string productPath = @"images\product-" + id;
+            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
 
-            
+            if (Directory.Exists(finalPath))
+            {
+                string[] filePaths = Directory.GetFiles(finalPath);
+                foreach(string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                Directory.Delete(finalPath);
+            }
+
 
             _unitOfWork.Product.Remove(productToBeDeleted);
             _unitOfWork.Save();
 
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return Json(new { success = true, message = "Delete Successful" });
         }
 
