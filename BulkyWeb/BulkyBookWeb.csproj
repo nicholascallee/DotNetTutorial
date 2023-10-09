@@ -28,13 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\product-1\" />
-    <Folder Include="wwwroot\images\product-2\" />
-    <Folder Include="wwwroot\images\product\" />
+    <None Include="Areas\Customer\Views\Home\Details.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\Customer\Views\Home\Details.cshtml" />
+    <Folder Include="wwwroot\images\products\" />
   </ItemGroup>
 
 </Project>
