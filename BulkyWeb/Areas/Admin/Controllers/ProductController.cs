@@ -6,7 +6,6 @@ using BulkyBook.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Stripe;
 using System.Collections.Generic;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
@@ -27,7 +26,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category,ProductImages").ToList();
             return View(objProductList);
         }
 
@@ -41,7 +40,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
-                Product = new BulkyBook.Models.Product()
+                Product = new Product()
             };
             if(id==null || id == 0)
             {
@@ -74,31 +73,38 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (files != null)
                 {
-                    foreach(IFormFile file in files)
+                    //if the current product does not contain a list of product images then make one
+                    if (productVM.Product.ProductImages == null)
+                    {
+                        productVM.Product.ProductImages = new List<ProductImage>();
+                    }
+
+                    foreach (IFormFile file in files)
                     {
                         string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                        string productPath = @"images\product-" + productVM.Product.Id;
+                        string productPath = @"images\products\product-"+productVM.Product.Id + @"\";
                         string finalPath = Path.Combine(wwwRootPath,productPath);
 
+                        //create folder for product
                         if(!Directory.Exists(finalPath))
                         {
                             Directory.CreateDirectory(finalPath);
                         }
+                        //copy photos to folder for product
                         using (var fileStream = new FileStream(Path.Combine(finalPath, fileName), FileMode.Create))
                         {
                             file.CopyTo(fileStream);
                         }
+
+                        //create a product image
                         ProductImage productImage = new()
                         {
-                            ImageUrl = @"\" + productPath + @"\" + fileName,
+                            ImageUrl = @"\" + productPath + fileName,
                             ProductId = productVM.Product.Id,
                         };
 
-                        if(productVM.Product.ProductImages == null)
-                        {
-                            productVM.Product.ProductImages = new List<ProductImage>();
-                        }
-
+                        
+                        //add the product image to the list of images in the view model
                         productVM.Product.ProductImages.Add(productImage);
 
                     }
@@ -127,7 +133,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return Json(new { data =  objProductList });
         }
 
