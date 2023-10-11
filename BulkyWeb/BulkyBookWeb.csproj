@@ -18,7 +18,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0-rc.1.23461.3" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.0-rc.2.23480.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0-rc.2.23509.1" />
     <PackageReference Include="Stripe.net" Version="42.7.0" />
   </ItemGroup>
 
