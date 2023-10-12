@@ -17,26 +17,6 @@ https://www.udemy.com/course/complete-aspnet-core-21-course/
 - **Why:** 
 	- easier to manage dependencies, and the separation ensures that test code doesn't accidentally get bundled with or impact production code. 
 
-**Files to Test:**
-
--   `ApplicationDbContext.cs` - Test its usage within repositories.
--   All the **Repository** files, e.g., `ProductRepository.cs`, `CategoryRepository.cs`, etc.
--   `UnitOfWork.cs`
--   `DBInitializer.cs` - Test to verify that initialization is correct.
-
-**Test Organization:**
-
--   Create a corresponding test file for each implementation file.
-
-**Naming Conventions:**
-
--   The test file will be the same as the implementation file but with a "Tests" suffix.
-
-**Setting up the Tests:**
-
--   Use an in-memory database or a mock database connection to ensure that tests are isolated and can run quickly without modifying any real data.
--   Use a library called **Moq** to mock the `ApplicationDbContext` when testing repositories. This ensures that calls to the database are simulated.
--   Always start with a fresh database state for each test. You can achieve this by re-initializing the in-memory database or resetting mock setups before each test.	
    	    
 ## Setting Up the Test Projects:
 - Each test project will reference the project it's testing. This means BulkyBookWeb.Tests should have a reference to the BulkyBookWeb project, and so on.    
