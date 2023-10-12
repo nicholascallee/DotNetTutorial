@@ -21,41 +21,28 @@ namespace BulkyBook.DataAccess.Tests
             Configuration = builder.Build();
         }
 
-
-
         public void ConfigureServices(IServiceCollection services)
         {
 
 
-            //// Connection string retrieval
-            //var connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            //// DbContext registration
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(connectionString));
-
-            //// Identity registration, which also registers UserManager and RoleManager and their dependencies
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>(); // Specifies the EF store for the user and roles
-
-            //// If you encounter issues with logging, you can register the default logging services.
-            //services.AddLogging();
-
-            //// Register DBInitializer
-            //services.AddScoped<IDBInitializer, DBInitializer>();
-
+            // Connection string retrieval
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            // DbContext registration
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-        }
+            // Identity registration, which also registers UserManager and RoleManager and their dependencies
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>(); // Specifies the EF store for the user and roles
+
+            // If you encounter issues with logging, you can register the default logging services.
+            services.AddLogging();
+
+            // Register DBInitializer
+            services.AddScoped<IDBInitializer, DBInitializer>();
 
 
-        public void Configure(IServiceProvider serviceProvider)
-        {
-            // Seed the database
-            var initializer = serviceProvider.GetRequiredService<IDBInitializer>();
-            initializer.Initialize();
         }
     }
 

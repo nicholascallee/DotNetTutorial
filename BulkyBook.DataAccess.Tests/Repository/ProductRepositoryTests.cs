@@ -24,31 +24,6 @@ namespace BulkyBook.DataAccess.Tests.Repository
         [SetUp]
         public void Setup()
         {
-            //var serviceCollection = new ServiceCollection();
-
-
-            //// Create mock of IWebHostEnvironment
-            //var mockEnvironment = new Mock<IWebHostEnvironment>();
-            //mockEnvironment.Setup(m => m.ContentRootPath).Returns("C:\\Development\\visualStudioProjects\\Bulky\\BulkyWeb");
-
-            //// Create startup instance
-            //var startup = new StartupTest(mockEnvironment.Object);
-            //startup.ConfigureServices(serviceCollection);
-
-            //_serviceProvider = serviceCollection.BuildServiceProvider();
-
-            //// Initialize and seed test database
-            //startup.Configure(_serviceProvider);
-
-            //_context = _serviceProvider.GetRequiredService<ApplicationDbContext>();
-
-            //// Instead of mocking, use real repository for integration tests
-            //_unitOfWork = new UnitOfWork(_context);
-
-
-
-
-
             var serviceCollection = new ServiceCollection();
 
             // Create mock of IWebHostEnvironment
@@ -63,12 +38,8 @@ namespace BulkyBook.DataAccess.Tests.Repository
 
             _context = _serviceProvider.GetRequiredService<ApplicationDbContext>();
 
-            // Instead of mocking, use real repository for integration tests
+            // Real TEst repository for integration tests
             _unitOfWork = new UnitOfWork(_context);
-
-
-
-
         }
 
         [Test]
@@ -84,18 +55,14 @@ namespace BulkyBook.DataAccess.Tests.Repository
         {
             var productToUpdate = _unitOfWork.Product.Get(u => u.Id == 1);
             productToUpdate.Title = "Updated Product";
+            _unitOfWork.Product.Update(productToUpdate);
             _unitOfWork.Save();
 
             var updatedProduct = _unitOfWork.Product.Get(u => u.Id == 1);
             Assert.That(updatedProduct.Title, Is.EqualTo("Updated Product"));
         }
 
-        [TearDown]
-        public void Cleanup()
-        {
-            // Cleanup logic if needed (like clearing database or disposing resources)
-            _context.Database.EnsureDeleted();  // Ensure DB is cleaned after each test
-        }
+
     }
 
 

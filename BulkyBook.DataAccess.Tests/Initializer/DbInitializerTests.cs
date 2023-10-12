@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BulkyBook.DataAccess.Initializer;
-using BulkyBook.Models;
+﻿using BulkyBook.DataAccess.Initializer;
 using BulkyBook.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,32 +15,6 @@ namespace BulkyBook.DataAccess.Tests.Initializer
         private Mock<RoleManager<IdentityRole>> _mockRoleManager;
         private Mock<UserManager<IdentityUser>> _mockUserManager;
         private Mock<ApplicationDbContext> _mockDbContext;
-
-
-
-
-
-
-
-        public static DbSet<T> GetQueryableMockDbSet<T>(List<T> sourceList) where T : class
-        {
-            var queryable = sourceList.AsQueryable();
-
-            var dbSet = new Mock<DbSet<T>>();
-            dbSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(queryable.Provider);
-            dbSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryable.Expression);
-            dbSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
-            dbSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
-
-            dbSet.Setup(d => d.Add(It.IsAny<T>())).Callback<T>((s) => sourceList.Add(s));
-
-            return dbSet.Object;
-        }
-
-
-
-
-
 
         [SetUp]
         public void Setup()
@@ -79,12 +47,6 @@ namespace BulkyBook.DataAccess.Tests.Initializer
 
             // Initialize the DBInitializer with Mocked Dependencies
             _initializer = new DBInitializer(_mockUserManager.Object, _mockRoleManager.Object, _mockDbContext.Object);
-        }
-
-
-        [TearDown]
-        public void TearDown()
-        {
         }
 
         [Test]
@@ -121,8 +83,6 @@ namespace BulkyBook.DataAccess.Tests.Initializer
             Times.Once);
         }
 
-
-
         [Test]
         public void Initialize_CreatesRoles_IfNotExisting()
         {
@@ -146,6 +106,20 @@ namespace BulkyBook.DataAccess.Tests.Initializer
             _mockUserManager.Verify(um => um.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()), Times.Once);
         }
 
+        public static DbSet<T> GetQueryableMockDbSet<T>(List<T> sourceList) where T : class
+        {
+            var queryable = sourceList.AsQueryable();
+
+            var dbSet = new Mock<DbSet<T>>();
+            dbSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(queryable.Provider);
+            dbSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryable.Expression);
+            dbSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
+            dbSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
+
+            dbSet.Setup(d => d.Add(It.IsAny<T>())).Callback<T>((s) => sourceList.Add(s));
+
+            return dbSet.Object;
+        }
 
     }
 }

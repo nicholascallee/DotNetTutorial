@@ -18,3 +18,7 @@
 -   Use an in-memory database or a mock database connection to ensure that tests are isolated and can run quickly without modifying any real data.
 -   Use a library called **Moq** to mock the `ApplicationDbContext` when testing repositories. This ensures that calls to the database are simulated.
 -   Always start with a fresh database state for each test. You can achieve this by re-initializing the in-memory database or resetting mock setups before each test.	
+
+
+**Findings**
+-	I think we should skip dbinitializer because it only happens if the db is not present, which in turn checks for pending migrations. Not sure how to emulate pending migrations. 
