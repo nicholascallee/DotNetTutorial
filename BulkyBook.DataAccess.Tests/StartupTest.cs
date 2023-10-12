@@ -16,7 +16,7 @@ namespace BulkyBook.DataAccess.Tests
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.test.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("appsettings.Test.json", optional: true, reloadOnChange: true);
 
             Configuration = builder.Build();
         }
@@ -27,23 +27,26 @@ namespace BulkyBook.DataAccess.Tests
         {
 
 
-            // Connection string retrieval
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            //// Connection string retrieval
+            //var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            // DbContext registration
+            //// DbContext registration
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(connectionString));
+
+            //// Identity registration, which also registers UserManager and RoleManager and their dependencies
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>(); // Specifies the EF store for the user and roles
+
+            //// If you encounter issues with logging, you can register the default logging services.
+            //services.AddLogging();
+
+            //// Register DBInitializer
+            //services.AddScoped<IDBInitializer, DBInitializer>();
+
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
-
-            // Identity registration, which also registers UserManager and RoleManager and their dependencies
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>(); // Specifies the EF store for the user and roles
-
-            // If you encounter issues with logging, you can register the default logging services.
-            services.AddLogging();
-
-            // Register DBInitializer
-            services.AddScoped<IDBInitializer, DBInitializer>();
-
 
         }
 

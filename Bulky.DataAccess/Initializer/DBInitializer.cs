@@ -44,19 +44,19 @@ namespace BulkyBook.DataAccess.Initializer
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Company)).GetAwaiter().GetResult();
        
 
-            _userManager.CreateAsync(new ApplicationUser
-            {
-                UserName = "nicholascallee@gmail.com",
-                Email = "nicholascallee@gmail.com",
-                Name = "Nicholas Allee",
-                PhoneNumber = "1234567890",
-                StreetAddress = "12345 way way",
-                State = "Missouri",
-                PostalCode = "64119",
-                City = "Maryville",
+                _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = "nicholascallee@gmail.com",
+                    Email = "nicholascallee@gmail.com",
+                    Name = "Nicholas Allee",
+                    PhoneNumber = "1234567890",
+                    StreetAddress = "12345 way way",
+                    State = "Missouri",
+                    PostalCode = "64119",
+                    City = "Maryville",
 
-            }, 
-            "REMOVED").GetAwaiter().GetResult();
+                }, 
+                "REMOVED").GetAwaiter().GetResult();
 
                 
                 ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "nicholascallee@gmail.com");
