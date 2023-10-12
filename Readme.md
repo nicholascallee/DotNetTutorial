@@ -15,6 +15,7 @@ https://www.udemy.com/course/complete-aspnet-core-21-course/
 - BulkyBookDataAccess.Tests for the data access solution.
 - **Why:** 
 	- easier to manage dependencies, and the separation ensures that test code doesn't accidentally get bundled with or impact production code. 
+
 **Files to Test:**
 
 -   `ApplicationDbContext.cs` - Test its usage within repositories.
