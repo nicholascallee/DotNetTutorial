@@ -16,7 +16,15 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
+    <ItemGroup>
+	    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+		    <_Parameter1>BulkyBook.DataAccess.Tests</_Parameter1>
+	    </AssemblyAttribute>
+    </ItemGroup>
+
+
+
+	<ItemGroup>
     <ProjectReference Include="..\Bulky.Models\BulkyBook.Models.csproj" />
     <ProjectReference Include="..\Bulky.Utility\BulkyBook.Utility.csproj" />
   </ItemGroup>
