@@ -4,7 +4,7 @@ using Moq;
 namespace BulkyBook.DataAccess.Tests.Repository
 {
     [TestFixture]
-    public class ProductRepositoryTests
+    public class CategoryRepositoryTests
     {
         private Mock<ApplicationDbContext> _mockContext;
         private ProductRepository _repository;

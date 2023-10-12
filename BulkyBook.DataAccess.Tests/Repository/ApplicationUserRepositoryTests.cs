@@ -1,10 +1,10 @@
-﻿using BulkyBook.DataAccess.Repository;
+using BulkyBook.DataAccess.Repository;
 using Moq;
 
 namespace BulkyBook.DataAccess.Tests.Repository
 {
     [TestFixture]
-    public class ProductRepositoryTests
+    public class ApplicationUserRepositoryTests
     {
         private Mock<ApplicationDbContext> _mockContext;
         private ProductRepository _repository;
@@ -28,7 +28,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
 
             // Assert
             // assert that the mock context's products now include the added product.
-            
+
         }
 
         // Additional tests for other methods...
