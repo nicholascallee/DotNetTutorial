@@ -17,6 +17,7 @@ https://www.udemy.com/course/complete-aspnet-core-21-course/
 - **Why:** 
 	- easier to manage dependencies, and the separation ensures that test code doesn't accidentally get bundled with or impact production code. 
 
+- Test naming convention:[MethodName]_[scenario]_[expectedBehavior]
    	    
 ## Setting Up the Test Projects:
 - Each test project will reference the project it's testing. This means BulkyBookWeb.Tests should have a reference to the BulkyBookWeb project, and so on.    
