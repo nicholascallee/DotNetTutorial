@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
-namespace BulkyBook.DataAccess.Tests
+namespace BulkyBook.DataAccess.Tests.Initializer
 {
     [TestFixture]
     public class DbInitializerTests
@@ -68,19 +68,19 @@ namespace BulkyBook.DataAccess.Tests
             var userStoreMock = new Mock<IUserStore<IdentityUser>>();
             _mockUserManager = new Mock<UserManager<IdentityUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
 
-            // ... Mock any methods you need. For instance:
+            // Mock RoleExistsAsync to always return false
             _mockRoleManager.Setup(rm => rm.RoleExistsAsync(It.IsAny<string>())).ReturnsAsync(false);
 
-
+            // Mock ApplicationUsers DbSet and its behavior with FirstOrDefault
             var mockUsersDbSet = GetQueryableMockDbSet(users);
             _mockDbContext.Setup(db => db.ApplicationUsers).Returns(mockUsersDbSet);
-
-
+            _mockDbContext.Setup(db => db.ApplicationUsers.FirstOrDefault(It.IsAny<Func<ApplicationUser, bool>>()))
+                .Returns<Func<ApplicationUser, bool>>(predicate => users.FirstOrDefault(predicate));
 
             // Initialize the DBInitializer with Mocked Dependencies
             _initializer = new DBInitializer(_mockUserManager.Object, _mockRoleManager.Object, _mockDbContext.Object);
-
         }
+
 
         [TearDown]
         public void TearDown()
