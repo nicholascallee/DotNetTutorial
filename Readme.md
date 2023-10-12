@@ -17,7 +17,7 @@ https://www.udemy.com/course/complete-aspnet-core-21-course/
 - **Why:** 
 	- easier to manage dependencies, and the separation ensures that test code doesn't accidentally get bundled with or impact production code. 
 
-- Test naming convention:
+- **Test naming convention**:
 	- [MethodName]_[scenario]_[expectedBehavior]
    	    
 ## Setting Up the Test Projects:
