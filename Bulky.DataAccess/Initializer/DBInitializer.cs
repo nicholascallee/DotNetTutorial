@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace BulkyBook.DataAccess.DBInitializer
+namespace BulkyBook.DataAccess.Initializer
 {
     public class DBInitializer : IDBInitializer
     {

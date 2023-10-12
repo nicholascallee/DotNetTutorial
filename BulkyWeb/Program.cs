@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using BulkyBook.Utility;
 using Stripe;
-using BulkyBook.DataAccess.DBInitializer;
+using BulkyBook.DataAccess.Initializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
