@@ -51,7 +51,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
         }
 
         [Test]
-        public void Update_UpdatesProduct()
+        public void Update_ValidProduct_UpdatesProduct()
         {
             var productToUpdate = _unitOfWork.Product.Get(u => u.Id == 1);
             productToUpdate.Title = "Updated Product";
