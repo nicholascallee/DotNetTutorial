@@ -35,17 +35,15 @@ namespace BulkyBook.DataAccess.Tests.Repository
         }
 
         [Test]
-        public void Add_ValidProduct_IncreasesCount()
+        public void Update_ValidOrderDetail_UpdatesOrderDetail()
         {
-            // Arrange
-            //var product = new Product { /* initialization */ };
+            var orderDetailToUpdate = _unitOfWork.OrderDetail.Get(u => u.Id == 1);
+            orderDetailToUpdate.Price = 1;  // Placeholder: Adjust the property name and value as required
+            _unitOfWork.OrderDetail.Update(orderDetailToUpdate);
+            _unitOfWork.Save();
 
-            // Act
-            //_repository.Add(product);
-
-            // Assert
-            // assert that the mock context's products now include the added product.
-            
+            var updatedOrderDetail = _unitOfWork.OrderDetail.Get(u => u.Id == 1);
+            Assert.That(updatedOrderDetail.Price, Is.EqualTo(1));  // Placeholder: Adjust the property name as required
         }
 
         // Additional tests for other methods...
