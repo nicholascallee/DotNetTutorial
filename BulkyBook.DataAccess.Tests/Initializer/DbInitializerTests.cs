@@ -39,11 +39,16 @@ namespace BulkyBook.DataAccess.Tests.Initializer
             // Mock RoleExistsAsync to always return false
             _mockRoleManager.Setup(rm => rm.RoleExistsAsync(It.IsAny<string>())).ReturnsAsync(false);
 
-            // Mock ApplicationUsers DbSet and its behavior with FirstOrDefault
-            var mockUsersDbSet = GetQueryableMockDbSet(users);
-            _mockDbContext.Setup(db => db.ApplicationUsers).Returns(mockUsersDbSet);
-            _mockDbContext.Setup(db => db.ApplicationUsers.FirstOrDefault(It.IsAny<Func<ApplicationUser, bool>>()))
-                .Returns<Func<ApplicationUser, bool>>(predicate => users.FirstOrDefault(predicate));
+
+            // Mock the app users
+            var mockApplicationUsersList = new List<ApplicationUser>().AsQueryable();
+            var _mockApplicationUsers = new Mock<DbSet<ApplicationUser>>();
+            _mockApplicationUsers.As<IQueryable<ApplicationUser>>().Setup(m => m.Provider).Returns(mockApplicationUsersList.Provider);
+            _mockApplicationUsers.As<IQueryable<ApplicationUser>>().Setup(m => m.Expression).Returns(mockApplicationUsersList.Expression);
+            _mockApplicationUsers.As<IQueryable<ApplicationUser>>().Setup(m => m.ElementType).Returns(mockApplicationUsersList.ElementType);
+            _mockApplicationUsers.As<IQueryable<ApplicationUser>>().Setup(m => m.GetEnumerator()).Returns(mockApplicationUsersList.GetEnumerator());
+
+            _mockDbContext.Setup(db => db.ApplicationUsers).Returns(_mockApplicationUsers.Object);
 
             // Initialize the DBInitializer with Mocked Dependencies
             _initializer = new DBInitializer(_mockUserManager.Object, _mockRoleManager.Object, _mockDbContext.Object);
