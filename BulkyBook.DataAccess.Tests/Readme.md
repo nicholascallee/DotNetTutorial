@@ -21,4 +21,7 @@
 
 
 **Findings**
--	I think we should skip dbinitializer because it only happens if the db is not present, which in turn checks for pending migrations. Not sure how to emulate pending migrations. 
+-	I think we should skip dbinitializer because it only happens if the db is not present, which in turn checks for pending migrations. Not sure how to emulate pending migrations.
+
+# Work Log
+-  10/12/23: created test scaffolding for repository classes and all other data based classes. leaving off on the orderdetailrepositorytest on updatevalidorderdetail test. need to pick properties to update and update them.  i will need to look at how the order detail is used in the app to determine the best test aproach.
