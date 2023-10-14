@@ -8,14 +8,25 @@ using BulkyBook.Utility;
 using Stripe;
 using BulkyBook.DataAccess.Initializer;
 
+string microsoftSecretKey = Environment.GetEnvironmentVariable("microsoft.secret");
+string facebookSecretKey = Environment.GetEnvironmentVariable("facebook.secret");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(options=> options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DefaultConnection")));
+
+// Read Stripe API Key from environment variable
+string stripeSecretKey = Environment.GetEnvironmentVariable("Stripe.SecretKey");
+string stripePublicKey = Environment.GetEnvironmentVariable("Stripe.PublicKey");
 
 
-builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+builder.Services.Configure<StripeSettings>(options =>
+{
+    options.SecretKey = stripeSecretKey;
+    options.PublishableKey = stripePublicKey;
+});
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
@@ -28,12 +39,12 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthentication().AddFacebook(option =>
 {
     option.AppId = "1135041287461855";
-    option.AppSecret = "REMOVED";
+    option.AppSecret = facebookSecretKey;
 });
 builder.Services.AddAuthentication().AddMicrosoftAccount(option =>
 {
     option.ClientId = "78bff936-96dc-423a-bd3a-a764af96eab0";
-    option.ClientSecret = "REMOVED";
+    option.ClientSecret = microsoftSecretKey;
 });
 
 builder.Services.AddDistributedMemoryCache();
