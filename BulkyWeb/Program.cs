@@ -8,6 +8,9 @@ using BulkyBook.Utility;
 using Stripe;
 using BulkyBook.DataAccess.DBInitializer;
 
+string microsoftSecretKey = Environment.GetEnvironmentVariable("microsoft.secret");
+string facebookSecretKey = Environment.GetEnvironmentVariable("facebook.secret");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -28,12 +31,12 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthentication().AddFacebook(option =>
 {
     option.AppId = "1135041287461855";
-    option.AppSecret = "320e2e3f4a53c3789e0c11405ca3565d";
+    option.AppSecret = facebookSecretKey;
 });
 builder.Services.AddAuthentication().AddMicrosoftAccount(option =>
 {
     option.ClientId = "78bff936-96dc-423a-bd3a-a764af96eab0";
-    option.ClientSecret = "nAQ8Q~4jk.X5AOLI8wcMLgtiOqY8UCUjGqL4zbd_";
+    option.ClientSecret = microsoftSecretKey;
 });
 
 builder.Services.AddDistributedMemoryCache();

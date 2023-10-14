@@ -42,21 +42,20 @@ namespace BulkyBook.DataAccess.DBInitializer
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Company)).GetAwaiter().GetResult();
-       
+                string adminPw = Environment.GetEnvironmentVariable("default.admin.password");
 
-            _userManager.CreateAsync(new ApplicationUser
-            {
-                UserName = "nicholascallee@gmail.com",
-                Email = "nicholascallee@gmail.com",
-                Name = "Nicholas Allee",
-                PhoneNumber = "1234567890",
-                StreetAddress = "12345 way way",
-                State = "Missouri",
-                PostalCode = "64119",
-                City = "Maryville",
+                _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = "nicholascallee@gmail.com",
+                    Email = "nicholascallee@gmail.com",
+                    Name = "Nicholas Allee",
+                    PhoneNumber = "1234567890",
+                    StreetAddress = "12345 way way",
+                    State = "Missouri",
+                    PostalCode = "64119",
+                    City = "Maryville",
 
-            }, 
-            "Admin123!").GetAwaiter().GetResult();
+                }, adminPw).GetAwaiter().GetResult();
 
 
                 ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "nicholascallee@gmail.com");
