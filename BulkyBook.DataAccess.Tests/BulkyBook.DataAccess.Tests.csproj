@@ -22,6 +22,9 @@
     <PackageReference Include="NUnit.Analyzers" Version="3.6.1" />
     <PackageReference Include="coverlet.collector" Version="3.2.0" />
     <PackageReference Include="SpecFlow" Version="4.0.31-beta" />
+    <PackageReference Include="SpecFlow.NUnit" Version="4.0.31-beta" />
+    <PackageReference Include="SpecFlow.NUnit.Runners" Version="4.0.31-beta" />
+    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="4.0.31-beta" />
   </ItemGroup>
   <ItemGroup>
 	<ProjectReference Include="..\Bulky.DataAccess\BulkyBook.DataAccess.csproj" />
