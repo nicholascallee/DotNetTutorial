@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBook.Models", "Bulky.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBook.Utility", "Bulky.Utility\BulkyBook.Utility.csproj", "{E2832D94-AD0F-4B10-A44F-D47CE146DE1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBook.DataAccess.Tests", "BulkyBook.DataAccess.Tests\BulkyBook.DataAccess.Tests.csproj", "{C63D7676-C1A3-40CB-A065-0ACE7656F2B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBook.DataAccess.Tests", "Bulky.DataAccess.Tests\BulkyBook.DataAccess.Tests.csproj", "{C63D7676-C1A3-40CB-A065-0ACE7656F2B8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{157D1537-28B2-4F48-B80F-B6AAE07F8889} = {157D1537-28B2-4F48-B80F-B6AAE07F8889}
 		{81C9DAAD-C753-4175-9D1C-E0B608C7A7F9} = {81C9DAAD-C753-4175-9D1C-E0B608C7A7F9}
