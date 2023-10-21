@@ -35,7 +35,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
         public virtual async System.Threading.Tasks.Task FeatureSetupAsync()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunnerForAssembly(null, NUnit.Framework.TestContext.CurrentContext.WorkerId);
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Repository", "Gherkin Product Repository Tests", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Repository", "Gherkin Product Repository Tests", "Examples:\r\n| ExpectedCount |\r\n| 6            |", ProgrammingLanguage.CSharp, featureTags);
             await testRunner.OnFeatureStartAsync(featureInfo);
         }
         
@@ -74,46 +74,41 @@ namespace BulkyBook.DataAccess.Tests.Repository
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Retrieving all products")]
-        [NUnit.Framework.TestCaseAttribute("6", null)]
-        public async System.Threading.Tasks.Task RetrievingAllProducts(string expectedCount, string[] exampleTags)
-        {
-            string[] tagsOfScenario = exampleTags;
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("ExpectedCount", expectedCount);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieving all products", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 3
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 4
-   await testRunner.WhenAsync("I retrieve all products", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 5
-   await testRunner.ThenAsync(string.Format("the number of products should be {0}", expectedCount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Updating a product\'s title")]
-        [NUnit.Framework.TestCaseAttribute("1", null)]
-        [NUnit.Framework.TestCaseAttribute("2", null)]
-        [NUnit.Framework.TestCaseAttribute("3", null)]
-        public async System.Threading.Tasks.Task UpdatingAProductsTitle(string productId, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Updating a product\'s values")]
+        [NUnit.Framework.TestCaseAttribute("1", "Title", "New Product Title", "New Product Title", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "Description", "Updated Description", "Updated Description", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "ISBN", "1234567890", "1234567890", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "Author", "John Doe", "John Doe", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "ListPrice", "25.99", "25.99", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "Price", "20.99", "20.99", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "Price50", "19.99", "19.99", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "Price100", "18.99", "18.99", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "Title", "Another Title", "Another Title", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "Description", "Another Description", "Another Description", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "ISBN", "0987654321", "0987654321", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "Author", "Jane Smith", "Jane Smith", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "ListPrice", "30.99", "30.99", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "Price", "28.99", "28.99", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "Price50", "27.99", "27.99", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "Price100", "26.99", "26.99", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Title", "Third Product", "Third Product", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Description", "Third Description", "Third Description", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "ISBN", "1122334455", "1122334455", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Author", "Alice Cooper", "Alice Cooper", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "ListPrice", "35.99", "35.99", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Price", "33.99", "33.99", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Price50", "32.99", "32.99", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Price100", "31.99", "31.99", null)]
+        public async System.Threading.Tasks.Task UpdatingAProductsValues(string productId, string columnName, string columnValue, string columnValue2, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ProductId", productId);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating a product\'s title", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 11
+            argumentsOfScenario.Add("ColumnName", columnName);
+            argumentsOfScenario.Add("ColumnValue", columnValue);
+            argumentsOfScenario.Add("ColumnValue2", columnValue2);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating a product\'s values", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -123,14 +118,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 12
-   await testRunner.GivenAsync(string.Format("I have a product with ID {0}", productId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
 #line 13
-   await testRunner.WhenAsync(string.Format("I update a product with ID {0}", productId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ await testRunner.GivenAsync(string.Format("I have a product with ID {0}", productId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 14
-   await testRunner.ThenAsync(string.Format("the product with ID {0} should have its title updated", productId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ await testRunner.WhenAsync(string.Format("I update the {0} of a product with value {1}", columnName, columnValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 15
+ await testRunner.ThenAsync(string.Format("the product with {0} should have its value updated as {1}", columnName, columnValue2), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
