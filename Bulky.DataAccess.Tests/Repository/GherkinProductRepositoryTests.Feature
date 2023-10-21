@@ -12,7 +12,7 @@ Examples:
 Scenario Outline: Updating a product's values
 	Given I have a product with ID <ProductId>
 	When I update the <ColumnName> of a product with value <ColumnValue>
-	Then the product with <ColumnName> should have its value updated as <ColumnValue2>
+	Then the product with <ColumnName> should have its value updated as <ColumnValue>
 
 Examples:
 | ProductId | ColumnName  | ColumnValue           | ColumnValue2          |

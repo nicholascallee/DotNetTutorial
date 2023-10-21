@@ -24,7 +24,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
         private static ServiceCollection _serviceCollection;
         private static StartupTest _startupTest;
 
-        private string updatedTitle = "Updated Product";
+        private string updatedTitle;
 
 
         [BeforeFeature]
@@ -119,10 +119,11 @@ namespace BulkyBook.DataAccess.Tests.Repository
         }
 
 
-        [Then(@"the product with (.*) should have its value updated with (.*)")]
+        [Then(@"the product with (.*) should have its value updated as (.*)")]
         public void ThenTheProductWithColumnNameShouldHaveItsValueUpdated(string columnName, string value)
         {
             int intVal;
+            double doubleVal;
             Product updatedProduct;
             switch (columnName)
             {
@@ -139,41 +140,41 @@ namespace BulkyBook.DataAccess.Tests.Repository
 
                 case ("Description"):
                     updatedProduct = _unitOfWork.Product.Get(u => u.Description == value);
-                    Assert.That(updatedProduct.Description, Is.EqualTo(updatedTitle));
+                    Assert.That(updatedProduct.Description, Is.EqualTo(value));
                     break;
 
                 case ("ISBN"):
                     updatedProduct = _unitOfWork.Product.Get(u => u.ISBN == value);
-                    Assert.That(updatedProduct.ISBN, Is.EqualTo(updatedTitle));
+                    Assert.That(updatedProduct.ISBN, Is.EqualTo(value));
                     break;
 
                 case ("Author"):
                     updatedProduct = _unitOfWork.Product.Get(u => u.Author == value);
-                    Assert.That(updatedProduct.Author, Is.EqualTo(updatedTitle));
+                    Assert.That(updatedProduct.Author, Is.EqualTo(value));
                     break;
 
                 case ("ListPrice"):
-                    intVal = Int32.Parse(value);
-                    updatedProduct = _unitOfWork.Product.Get(u => u.ListPrice == intVal);
-                    Assert.That(updatedProduct.ListPrice, Is.EqualTo(intVal));
+                    doubleVal = Double.Parse(value);
+                    updatedProduct = _unitOfWork.Product.Get(u => u.ListPrice == doubleVal);
+                    Assert.That(updatedProduct.ListPrice, Is.EqualTo(doubleVal));
                     break;
 
                 case ("Price"):
-                    intVal = Int32.Parse(value);
-                    updatedProduct = _unitOfWork.Product.Get(u => u.Price == intVal);
-                    Assert.That(updatedProduct.Price, Is.EqualTo(intVal));
+                    doubleVal = Double.Parse(value);
+                    updatedProduct = _unitOfWork.Product.Get(u => u.Price == doubleVal);
+                    Assert.That(updatedProduct.Price, Is.EqualTo(doubleVal));
                     break;
 
                 case ("Price50"):
-                    intVal = Int32.Parse(value);
-                    updatedProduct = _unitOfWork.Product.Get(u => u.Price50 == intVal);
-                    Assert.That(updatedProduct.Price50, Is.EqualTo(intVal));
+                    doubleVal = Double.Parse(value);
+                    updatedProduct = _unitOfWork.Product.Get(u => u.Price50 == doubleVal);
+                    Assert.That(updatedProduct.Price50, Is.EqualTo(doubleVal));
                     break;
 
                 case ("Price100"):
-                    intVal = Int32.Parse(value);
-                    updatedProduct = _unitOfWork.Product.Get(u => u.Price100 == intVal);
-                    Assert.That(updatedProduct.Price100, Is.EqualTo(intVal));
+                    doubleVal = Double.Parse(value);
+                    updatedProduct = _unitOfWork.Product.Get(u => u.Price100 == doubleVal);
+                    Assert.That(updatedProduct.Price100, Is.EqualTo(doubleVal));
                     break;
 
                 default:

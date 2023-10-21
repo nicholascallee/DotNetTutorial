@@ -125,7 +125,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync(string.Format("I update the {0} of a product with value {1}", columnName, columnValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
- await testRunner.ThenAsync(string.Format("the product with {0} should have its value updated as {1}", columnName, columnValue2), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ await testRunner.ThenAsync(string.Format("the product with {0} should have its value updated as {1}", columnName, columnValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
