@@ -1,5 +1,4 @@
-﻿using BulkyBook.DataAccess.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 
 namespace BulkyBook.DataAccess.Tests

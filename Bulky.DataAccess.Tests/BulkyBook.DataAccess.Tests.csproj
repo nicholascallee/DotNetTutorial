@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Remove="Repository\GherkinProductRepositoryTests - Copy (2).Feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Repository\GherkinProductRepositoryTests - Copy.Feature.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
@@ -28,6 +33,17 @@
   </ItemGroup>
   <ItemGroup>
 	<ProjectReference Include="..\Bulky.DataAccess\BulkyBook.DataAccess.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Repository\GherkinUnitOfWorkRepositoryTests.Feature.cs">
+      <DependentUpon>GherkinUnitOfWorkRepositoryTests.Feature</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <SpecFlowFeatureFiles Update="Repository\GherkinUnitOfWorkRepositoryTests.Feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
   </ItemGroup>
 
 </Project>

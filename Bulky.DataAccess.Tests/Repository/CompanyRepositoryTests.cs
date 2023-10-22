@@ -23,7 +23,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
             mockEnvironment.Setup(m => m.ContentRootPath).Returns("C:\\Development\\visualStudioProjects\\Bulky\\BulkyWeb");
 
             // Create startup instance
-            var startup = new StartupTest(mockEnvironment.Object);
+            var startup = new ApplicationRunner(mockEnvironment.Object);
             startup.ConfigureServices(serviceCollection);
 
             _serviceProvider = serviceCollection.BuildServiceProvider();

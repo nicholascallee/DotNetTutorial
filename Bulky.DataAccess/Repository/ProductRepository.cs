@@ -1,11 +1,6 @@
 ﻿using BulkyBook.DataAccess.Data;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulkyBook.DataAccess.Repository
 {
@@ -32,10 +27,6 @@ namespace BulkyBook.DataAccess.Repository
                 objFromDb.CategoryId = obj.CategoryId;
                 objFromDb.Author = obj.Author;
                 objFromDb.ProductImages = obj.ProductImages;
-                //if(obj.ImageUrl != null)
-                //{
-                //    objFromDb.ImageUrl = obj.ImageUrl;
-                //}
             }
         }
     }

@@ -1,13 +1,8 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.DataAccess.Repository;
 using Moq;
 using TechTalk.SpecFlow;
-using NUnit.Framework;
 using Microsoft.Extensions.DependencyInjection;
-using BulkyBook.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using Newtonsoft.Json.Linq;
-using BulkyBook.DataAccess.Repository;
 using Microsoft.AspNetCore.Hosting;
 
 namespace BulkyBook.DataAccess.Tests.Repository
@@ -19,12 +14,10 @@ namespace BulkyBook.DataAccess.Tests.Repository
         private static ApplicationDbContext _context;
         private static ServiceProvider _serviceProvider;
         private Product productToUpdate;
-        private List<Product> results;
         private static Mock<IWebHostEnvironment> _mockEnvironment;
         private static ServiceCollection _serviceCollection;
-        private static StartupTest _startupTest;
+        private static ApplicationRunner _testingApplication;
 
-        private string updatedTitle;
 
 
         [BeforeFeature]
@@ -37,8 +30,8 @@ namespace BulkyBook.DataAccess.Tests.Repository
             _mockEnvironment.Setup(m => m.ContentRootPath).Returns("C:\\Development\\visualStudioProjects\\Bulky\\BulkyWeb");
 
             // Create startup instance
-            _startupTest = new StartupTest(_mockEnvironment.Object);
-            _startupTest.ConfigureServices(_serviceCollection);
+            _testingApplication = new ApplicationRunner(_mockEnvironment.Object);
+            _serviceCollection = (ServiceCollection)_testingApplication.ConfigureServices(_serviceCollection);
 
             _serviceProvider = _serviceCollection.BuildServiceProvider();
 
@@ -54,20 +47,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
         {
             productToUpdate = _unitOfWork.Product.Get(u => u.Id == id);
         }
-
-
-        [When(@"I retrieve all products")]
-        public void WhenIRetrieveAllProducts()
-        {
-            results = _unitOfWork.Product.GetAll().ToList();
-        }
-
-        [Then(@"the number of products should be (.*)")]
-        public void ThenTheNumberOfProductsShouldBe(int expectedCount)
-        {
-            Assert.That(results.Count, Is.EqualTo(expectedCount));
-        }
-
+        
         [When(@"I update the (.*) of a product with value (.*)")]
         public void WhenIUpdateAColumnWithValue(string columnName, string value)
         {

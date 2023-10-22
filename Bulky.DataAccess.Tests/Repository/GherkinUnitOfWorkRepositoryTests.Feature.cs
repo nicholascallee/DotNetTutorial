@@ -20,22 +20,23 @@ namespace BulkyBook.DataAccess.Tests.Repository
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "4.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Gherkin Product Repository Tests")]
-    public partial class GherkinProductRepositoryTestsFeature
+    [NUnit.Framework.DescriptionAttribute("Update and verify entity values in a repository")]
+    public partial class UpdateAndVerifyEntityValuesInARepositoryFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-#line 1 "GherkinProductRepositoryTests.Feature"
+#line 1 "GherkinUnitOfWorkRepositoryTests.Feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual async System.Threading.Tasks.Task FeatureSetupAsync()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunnerForAssembly(null, NUnit.Framework.TestContext.CurrentContext.WorkerId);
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Repository", "Gherkin Product Repository Tests", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Repository", "Update and verify entity values in a repository", "  In order to ensure that values in the repository can be updated and verified\r\n " +
+                    " As a developer\r\n  I want to update an entity\'s value and verify the changes", ProgrammingLanguage.CSharp, featureTags);
             await testRunner.OnFeatureStartAsync(featureInfo);
         }
         
@@ -74,34 +75,20 @@ namespace BulkyBook.DataAccess.Tests.Repository
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Updating a product\'s values")]
-        [NUnit.Framework.TestCaseAttribute("1", "Title", "New Product Title", "New Product Title", null)]
-        [NUnit.Framework.TestCaseAttribute("1", "Description", "Updated Description", "Updated Description", null)]
-        [NUnit.Framework.TestCaseAttribute("1", "ISBN", "1234567890", "1234567890", null)]
-        [NUnit.Framework.TestCaseAttribute("1", "Author", "John Doe", "John Doe", null)]
-        [NUnit.Framework.TestCaseAttribute("1", "ListPrice", "25.99", "25.99", null)]
-        [NUnit.Framework.TestCaseAttribute("1", "Price", "20.99", "20.99", null)]
-        [NUnit.Framework.TestCaseAttribute("1", "Price50", "19.99", "19.99", null)]
-        [NUnit.Framework.TestCaseAttribute("1", "Price100", "18.99", "18.99", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "Title", "Another Title", "Another Title", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "Description", "Another Description", "Another Description", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "ISBN", "0987654321", "0987654321", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "Author", "Jane Smith", "Jane Smith", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "ListPrice", "30.99", "30.99", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "Price", "28.99", "28.99", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "Price50", "27.99", "27.99", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "Price100", "26.99", "26.99", null)]
-        public async System.Threading.Tasks.Task UpdatingAProductsValues(string productId, string columnName, string columnValue, string columnValue2, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Updating and verifying entity values")]
+        [NUnit.Framework.TestCaseAttribute("Product", "ProductName", "NewName", null)]
+        [NUnit.Framework.TestCaseAttribute("Category", "CategoryName", "NewCategory", null)]
+        [NUnit.Framework.TestCaseAttribute("User", "Username", "NewUsername", null)]
+        public async System.Threading.Tasks.Task UpdatingAndVerifyingEntityValues(string @class, string column, string value, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("ProductId", productId);
-            argumentsOfScenario.Add("ColumnName", columnName);
-            argumentsOfScenario.Add("ColumnValue", columnValue);
-            argumentsOfScenario.Add("ColumnValue2", columnValue2);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating a product\'s values", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 3
-this.ScenarioInitialize(scenarioInfo);
+            argumentsOfScenario.Add("Class", @class);
+            argumentsOfScenario.Add("Column", column);
+            argumentsOfScenario.Add("Value", value);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating and verifying entity values", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 7
+  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -110,14 +97,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 4
- await testRunner.GivenAsync(string.Format("I have a product with ID {0}", productId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 8
+    await testRunner.GivenAsync(string.Format("I have an instance of {0} at {1} with a known value of {2}", @class, column, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 5
- await testRunner.WhenAsync(string.Format("I update the {0} of a product with value {1}", columnName, columnValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+    await testRunner.WhenAsync(string.Format("I update the instance of {0} at {1} with value {2}", @class, column, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 6
- await testRunner.ThenAsync(string.Format("the product with {0} should have its value updated as {1}", columnName, columnValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+    await testRunner.ThenAsync(string.Format("the instance of {0} at {1} should have its value updated as {2}", @class, column, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

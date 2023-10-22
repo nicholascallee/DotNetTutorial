@@ -1,14 +1,5 @@
 ﻿Feature: Gherkin Product Repository Tests
 
-
-Examples:
-| ExpectedCount |
-| 6            |
-
-
-
-
-
 Scenario Outline: Updating a product's values
 	Given I have a product with ID <ProductId>
 	When I update the <ColumnName> of a product with value <ColumnValue>
@@ -32,14 +23,7 @@ Examples:
 | 2         | Price       | 28.99                 | 28.99                 |
 | 2         | Price50     | 27.99                 | 27.99                 |
 | 2         | Price100    | 26.99                 | 26.99                 |
-| 3         | Title       | Third Product         | Third Product         |
-| 3         | Description | Third Description     | Third Description     |
-| 3         | ISBN        | 1122334455            | 1122334455            |
-| 3         | Author      | Alice Cooper          | Alice Cooper          |
-| 3         | ListPrice   | 35.99                 | 35.99                 |
-| 3         | Price       | 33.99                 | 33.99                 |
-| 3         | Price50     | 32.99                 | 32.99                 |
-| 3         | Price100    | 31.99                 | 31.99                 |
+
 
 
 

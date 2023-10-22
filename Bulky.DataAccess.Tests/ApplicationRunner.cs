@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace BulkyBook.DataAccess.Tests
 {
-    public class StartupTest
+    public class ApplicationRunner
     {
         public IConfiguration Configuration { get; private set; }
 
 
-        public StartupTest(IWebHostEnvironment env)
+        public ApplicationRunner(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -21,7 +21,7 @@ namespace BulkyBook.DataAccess.Tests
             Configuration = builder.Build();
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceCollection ConfigureServices(IServiceCollection services)
         {
 
 
@@ -41,6 +41,8 @@ namespace BulkyBook.DataAccess.Tests
 
             // Register DBInitializer
             services.AddScoped<IDBInitializer, DBInitializer>();
+
+            return services;
 
 
         }
