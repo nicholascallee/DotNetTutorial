@@ -20,8 +20,8 @@ namespace BulkyBook.DataAccess.Tests.Repository
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "4.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Update and verify entity values in a repository")]
-    public partial class UpdateAndVerifyEntityValuesInARepositoryFeature
+    [NUnit.Framework.DescriptionAttribute("Gherkin UnitOfWork Repository Tests")]
+    public partial class GherkinUnitOfWorkRepositoryTestsFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
@@ -35,8 +35,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
         public virtual async System.Threading.Tasks.Task FeatureSetupAsync()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunnerForAssembly(null, NUnit.Framework.TestContext.CurrentContext.WorkerId);
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Repository", "Update and verify entity values in a repository", "  In order to ensure that values in the repository can be updated and verified\r\n " +
-                    " As a developer\r\n  I want to update an entity\'s value and verify the changes", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Repository", "Gherkin UnitOfWork Repository Tests", null, ProgrammingLanguage.CSharp, featureTags);
             await testRunner.OnFeatureStartAsync(featureInfo);
         }
         
@@ -76,19 +75,20 @@ namespace BulkyBook.DataAccess.Tests.Repository
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Updating and verifying entity values")]
-        [NUnit.Framework.TestCaseAttribute("Product", "ProductName", "NewName", null)]
-        [NUnit.Framework.TestCaseAttribute("Category", "CategoryName", "NewCategory", null)]
-        [NUnit.Framework.TestCaseAttribute("User", "Username", "NewUsername", null)]
-        public async System.Threading.Tasks.Task UpdatingAndVerifyingEntityValues(string @class, string column, string value, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("Product", "ISBN", "0987654321", "11111111", null)]
+        [NUnit.Framework.TestCaseAttribute("Category", "Name", "History", "Science", null)]
+        [NUnit.Framework.TestCaseAttribute("ApplicationUser", "Name", "Nicholas Allee", "Billy Bob", null)]
+        public async System.Threading.Tasks.Task UpdatingAndVerifyingEntityValues(string @class, string column, string value, string newValue, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("Class", @class);
             argumentsOfScenario.Add("Column", column);
             argumentsOfScenario.Add("Value", value);
+            argumentsOfScenario.Add("NewValue", newValue);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating and verifying entity values", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 7
-  this.ScenarioInitialize(scenarioInfo);
+#line 3
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -97,14 +97,14 @@ namespace BulkyBook.DataAccess.Tests.Repository
             else
             {
                 await this.ScenarioStartAsync();
-#line 8
-    await testRunner.GivenAsync(string.Format("I have an instance of {0} at {1} with a known value of {2}", @class, column, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 4
+await testRunner.GivenAsync(string.Format("I have an instance of {0} at {1} with a known value of {2}", @class, column, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 9
-    await testRunner.WhenAsync(string.Format("I update the instance of {0} at {1} with value {2}", @class, column, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 5
+await testRunner.WhenAsync(string.Format("I update the instance of {0} at {1} with value {2}", @class, column, newValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 10
-    await testRunner.ThenAsync(string.Format("the instance of {0} at {1} should have its value updated as {2}", @class, column, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 6
+await testRunner.ThenAsync(string.Format("the instance of {0} at {1} should have its value updated as {2}", @class, column, newValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
