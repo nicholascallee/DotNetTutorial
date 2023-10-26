@@ -10,10 +10,10 @@ https://www.udemy.com/course/complete-aspnet-core-21-course/
 # Test Plan
 
 ## Location of Test Projects:
-- BulkyBookWeb.Tests for the web solution.
-- BulkyBookUtility.Tests for the utility solution. 
-- BulkyBookModel.Tests for the model solution.
-- BulkyBookDataAccess.Tests for the data access solution.
+- BulkyBook.Web.Tests for the web solution.
+- BulkyBook.Utility.Tests for the utility solution. 
+- BulkyBook.Model.Tests for the model solution.
+- BulkyBook.DataAccess.Tests for the data access solution.
 - **Why:** 
 	- easier to manage dependencies, and the separation ensures that test code doesn't accidentally get bundled with or impact production code. 
 
@@ -22,7 +22,7 @@ https://www.udemy.com/course/complete-aspnet-core-21-course/
    	    
 ## Setting Up the Test Projects:
 - Each test project will reference the project it's testing. This means BulkyBookWeb.Tests should have a reference to the BulkyBookWeb project, and so on.    
-- Install necessary packages: A testing framework (xUnit, NUnit, or MSTest). xUnit is quite popular for .NET Core projects. Moq for mocking in unit tests. Other necessary libraries specific to what is being tested.
+- Install necessary packages: A testing framework (xUnit, NUnit, or MSTest). xUnit is quite popular for .NET Core projects. Moq for mocking in unit tests. SpecFlow
 
 ## Priority and Reason for testing:
    - **Data Access Layer (DAL):** 
