@@ -101,10 +101,10 @@ this.ScenarioInitialize(scenarioInfo);
 await testRunner.GivenAsync(string.Format("I have an instance of {0} at {1} with a known value of {2}", @class, column, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
-await testRunner.WhenAsync(string.Format("I update the instance of {0} at {1} with value {2}", @class, column, newValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+await testRunner.WhenAsync(string.Format("I update that instance with value {0}", newValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
-await testRunner.ThenAsync(string.Format("the instance of {0} at {1} should have its value updated as {2}", @class, column, newValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+await testRunner.ThenAsync(string.Format("requerying the instance should return {0}", newValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

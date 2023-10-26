@@ -42,31 +42,26 @@ namespace BulkyBook.DataAccess.Tests.Repository
 
             _context = _serviceProvider.GetRequiredService<ApplicationDbContext>();
 
-            // Real TEst repository for integration tests
+            // Real Test repository for integration tests
             _unitOfWork = new UnitOfWork(_context);
         }
 
         [Given(@"I have an instance of (.*) at (.*) with a known value of (.*)")]
         public void GivenIHaveAnInstanceOfBlankAtBlankWithAValueOfBlank(string className, string columnName, string value)
         {
+            globalClass = className;
+            globalColumn = columnName;
             globalOriginalValue = value;
-            
-            inputClassColumnInstance = FetchInstanceFromUnitOfWork(className, columnName, value);
-            if (inputClassColumnInstance == null)
-            {
-                throw new InvalidOperationException($"The repo has no item under the given filter. (repo.class.get() came back as null)");
-            }
 
-            PropertyInfo propertyInfo = inputClassColumnInstance.GetType().GetProperty(columnName);
-
+            //grab the instance from the unitofwork repo
+            inputClassColumnInstance = FetchInstanceFromUnitOfWork(className,columnName,value);
         }
 
 
-        [When(@"I update the instance of (.*) at (.*) with value (.*)")]
-        public void WhenIUpdateTheBlankOfABlankWithValueBlank(string className, string columnName, string value)
+        [When(@"I update that instance with value (.*)")]
+        public void WhenIUpdateTheInstanceWithValueBlank(string value)
         {
-            globalClass = className;
-            globalColumn = columnName;
+            
             // Determine the entity type from the repository
             Type entityType = null;
             Type[] interfaces = repoInstance.GetType().GetInterfaces();
@@ -79,53 +74,56 @@ namespace BulkyBook.DataAccess.Tests.Repository
                     break;
                 }
             }
-
             if (entityType == null)
                 throw new InvalidOperationException($"Could not determine the entity type for the repository.");
-
+            
             // Use reflection to set the property value
-            PropertyInfo propertyInfo = entityType.GetProperty(columnName);
+            PropertyInfo propertyInfo = entityType.GetProperty(globalColumn);
             if (propertyInfo == null)
-                throw new InvalidOperationException($"No property named '{columnName}' found on {entityType.Name}");
+                throw new InvalidOperationException($"No property named '{globalColumn}' found on {entityType.Name}");
 
             // Convert the provided value to the appropriate type and set it
             object convertedValue = Convert.ChangeType(value, propertyInfo.PropertyType);
             propertyInfo.SetValue(inputClassColumnInstance, convertedValue);
-            string fullClassName = "BulkyBook.Models." + className + ", BulkyBook.Models";
+            
+            //checking for existance of the given class
+            string fullClassName = "BulkyBook.Models." + globalClass + ", BulkyBook.Models";
             Type expectedType = Type.GetType(fullClassName);
-
             if (expectedType == null)
             {
                 throw new InvalidOperationException($"Cannot find the type '{fullClassName}' in the currently loaded assemblies.");
             }
 
+            //if the instance is the same type as mentioned in the gherkin test
             if (inputClassColumnInstance.GetType() == expectedType)
             {
+                //building up the update method
                 MethodInfo updateMethod = repoInstance.GetType().GetMethod("Update", new Type[] { expectedType });
                 if (updateMethod == null)
                 {
-                    throw new InvalidOperationException($"The 'Update' method for type '{className}' could not be found on the repository.");
+                    throw new InvalidOperationException($"The 'Update' method for type '{globalClass}' could not be found on the repository.");
                 }
-
+                // Calling the update method here
                 updateMethod.Invoke(repoInstance, new object[] { inputClassColumnInstance });
+                _unitOfWork.Save();
             }
             else
             {
-                throw new InvalidOperationException($"Expected inputClassColumnInstance to be of type '{className}', but got '{inputClassColumnInstance.GetType().Name}'.");
+                throw new InvalidOperationException($"Expected inputClassColumnInstance to be of type '{globalClass}', but got '{inputClassColumnInstance.GetType().Name}'.");
             }
-            _unitOfWork.Save();
+           
         }
 
-        [Then(@"the instance of (.*) at (.*) should have its value updated as (.*)")]
-        public void ThenTheInstanceOfBlankAtBlankShouldHaveItsValueUpdatedAsBlank(string className, string columnName, string value)
+        [Then(@"requerying the instance should return (.*)")]
+        public void ThenRequeryingTheInstanceShouldReturnBlank(string value)
         {
             // Using reflection to get the actual value of the property
-            PropertyInfo propertyInfo = inputClassColumnInstance.GetType().GetProperty(columnName);
+            PropertyInfo propertyInfo = inputClassColumnInstance.GetType().GetProperty(globalColumn);
             if (propertyInfo == null)
-                throw new InvalidOperationException($"No property named '{columnName}' found on inputClassColumnInstance");
+                throw new InvalidOperationException($"No property named '{globalColumn}' found on inputClassColumnInstance");
 
             // Re-query the unitOfWork for the given entity
-            var updatedInstance = FetchInstanceFromUnitOfWork(className, columnName, value);
+            var updatedInstance = FetchInstanceFromUnitOfWork(globalClass, globalColumn, value);
 
             // Ensure the updatedInstance is not null
             Assert.IsNotNull(updatedInstance, "The updated instance could not be retrieved from the repository.");
@@ -137,6 +135,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
 
         private object FetchInstanceFromUnitOfWork(string className, string columnName, string value)
         {
+            
 
             // Get the repository from the unitOfWork based on the className
             var repoProperty = _unitOfWork.GetType().GetProperty(className);
@@ -144,7 +143,6 @@ namespace BulkyBook.DataAccess.Tests.Repository
                 throw new InvalidOperationException($"No property named '{className}' found on unitOfWork");
 
             repoInstance = repoProperty.GetValue(_unitOfWork);
-
 
             Type repoType = repoInstance.GetType();
             Type entityType = repoType.GetInterfaces()
@@ -168,14 +166,22 @@ namespace BulkyBook.DataAccess.Tests.Repository
                 throw new InvalidOperationException($"The Get method could not be found on the repoInstance type.");
             }
 
-            return getMethod.Invoke(repoInstance, new object[] { lambda, null, false });
+            var resultingInstance =  getMethod.Invoke(repoInstance, new object[] { lambda, null, false });
+            if (resultingInstance == null)
+            {
+                throw new InvalidOperationException($"The repo has no item under the given filter. (repo.class.get() came back as null)");
+            }
+            else
+            {
+                return resultingInstance;
+            }
         }
 
 
         [AfterScenario]
         public void ResetChangedValues()
         {
-            WhenIUpdateTheBlankOfABlankWithValueBlank(globalClass, globalColumn, globalOriginalValue);
+            WhenIUpdateTheInstanceWithValueBlank(globalOriginalValue);
         }
 
     }
