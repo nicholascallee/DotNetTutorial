@@ -18,14 +18,12 @@ namespace BulkyBook.DataAccess.Tests.Repository
         private static Mock<IWebHostEnvironment> _mockEnvironment;
         private static ServiceCollection _serviceCollection;
         private static ApplicationRunner _testingApplication;
-        dynamic repo;
+
         private Object inputClassColumnInstance;
-        private object originalValue;
-        private string changedColumnName;
         private string globalClass;
         private string globalColumn;
         private string globalOriginalValue;
-        dynamic repoInstance;
+        private dynamic repoInstance;
 
         [BeforeFeature]
         public static void Setup()
@@ -60,11 +58,6 @@ namespace BulkyBook.DataAccess.Tests.Repository
             }
 
             PropertyInfo propertyInfo = inputClassColumnInstance.GetType().GetProperty(columnName);
-            if (propertyInfo != null)
-            {
-                originalValue = propertyInfo.GetValue(inputClassColumnInstance);
-                changedColumnName = columnName;
-            }
 
         }
 
