@@ -74,11 +74,11 @@ namespace BulkyBook.DataAccess.Tests.Repository
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Updating and verifying entity values")]
+        [NUnit.Framework.DescriptionAttribute("UnitOfWork Repository Is Updated With New Data")]
         [NUnit.Framework.TestCaseAttribute("Product", "ISBN", "0987654321", "11111111", null)]
         [NUnit.Framework.TestCaseAttribute("Category", "Name", "History", "Science", null)]
         [NUnit.Framework.TestCaseAttribute("ApplicationUser", "Name", "Nicholas Allee", "Billy Bob", null)]
-        public async System.Threading.Tasks.Task UpdatingAndVerifyingEntityValues(string @class, string column, string value, string newValue, string[] exampleTags)
+        public async System.Threading.Tasks.Task UnitOfWorkRepositoryIsUpdatedWithNewData(string @class, string column, string value, string newValue, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -86,7 +86,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
             argumentsOfScenario.Add("Column", column);
             argumentsOfScenario.Add("Value", value);
             argumentsOfScenario.Add("NewValue", newValue);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating and verifying entity values", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("UnitOfWork Repository Is Updated With New Data", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

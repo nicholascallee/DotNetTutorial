@@ -1,6 +1,6 @@
 ﻿Feature: Gherkin UnitOfWork Repository Tests
 
-Scenario Outline: Updating and verifying entity values
+Scenario Outline: UnitOfWork Repository Is Updated With New Data
 Given I have an instance of <Class> at <Column> with a known value of <Value>
 When I update the instance of <Class> at <Column> with value <NewValue>
 Then the instance of <Class> at <Column> should have its value updated as <NewValue>
