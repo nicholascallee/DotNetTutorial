@@ -25,3 +25,9 @@
 
 -   I have finished the data access testing and have decided to go with Specflow for gherkin based testing.
 -   The bulk of the work was working on a generic way to test unitOfWork. i spent a good deal of time talking back and forth with chatgpt to finally figure out how to use reflections and dynamically call variable parameters.
+
+
+
+# Results:
+
+![image](https://github.com/nicholascallee/DotNetTutorial/assets/141438641/92498c87-925c-42a9-ac52-8b7b02a4fd4d)
