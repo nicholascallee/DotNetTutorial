@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 
-namespace BulkyBook.DataAccess.Tests
+namespace BulkyBook.DataAccess.Tests.Data
 {
     public static class MockDbGenerator
     {

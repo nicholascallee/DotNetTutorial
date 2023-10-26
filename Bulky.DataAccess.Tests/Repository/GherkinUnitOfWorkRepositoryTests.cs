@@ -20,6 +20,11 @@ namespace BulkyBook.DataAccess.Tests.Repository
         private static ApplicationRunner _testingApplication;
         dynamic repo;
         private Object inputClassColumnInstance;
+        private object originalValue;
+        private string changedColumnName;
+        private string globalClass;
+        private string globalColumn;
+        private string globalOriginalValue;
 
         [BeforeFeature]
         public static void Setup()
@@ -45,6 +50,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
         [Given(@"I have an instance of (.*) at (.*) with a known value of (.*)")]
         public void GivenIHaveAnInstanceOfBlankAtBlankWithAValueOfBlank(string className, string columnName, string value)
         {
+            globalOriginalValue = value;
             // is the given class a valid property of UnitOfWork?
             var repoProperty = _unitOfWork.GetType().GetProperty(className);
             if (repoProperty == null)
@@ -80,12 +86,22 @@ namespace BulkyBook.DataAccess.Tests.Repository
             {
                 throw new InvalidOperationException($"The repo has no item under the given filter. (repo.class.get() came back as null)");
             }
+
+            PropertyInfo propertyInfo = inputClassColumnInstance.GetType().GetProperty(columnName);
+            if (propertyInfo != null)
+            {
+                originalValue = propertyInfo.GetValue(inputClassColumnInstance);
+                changedColumnName = columnName;
+            }
+
         }
 
 
         [When(@"I update the instance of (.*) at (.*) with value (.*)")]
         public void WhenIUpdateTheBlankOfABlankWithValueBlank(string className, string columnName, string value)
         {
+            globalClass = className;
+            globalColumn = columnName;
             // Determine the entity type from the repository
             Type entityType = null;
             Type[] interfaces = repo.GetType().GetInterfaces();
@@ -132,17 +148,6 @@ namespace BulkyBook.DataAccess.Tests.Repository
             {
                 throw new InvalidOperationException($"Expected inputClassColumnInstance to be of type '{className}', but got '{inputClassColumnInstance.GetType().Name}'.");
             }
-
-
-            //if (inputClassColumnInstance is BulkyBook.Models.Category category)
-            //{
-            //    repo.Update(category);
-            //}
-            //else
-            //{
-            //    throw new InvalidOperationException($"Expected inputClassColumnInstance to be of type 'BulkyBook.Models.Category', but got '{inputClassColumnInstance.GetType().Name}'.");
-            //}
-
             _unitOfWork.Save();
         }
 
@@ -201,17 +206,12 @@ namespace BulkyBook.DataAccess.Tests.Repository
             return getMethod.Invoke(repoInstance, new object[] { lambda, null, false });
         }
 
-        //[Then(@"the instance of (.*) at (.*) should have its value updated as (.*)")]
-        //public void ThenTheInstanceOfBlankAtBlankShouldHaveItsValueUpdatedAsBlank(string className, string columnName, string value)
-        //{
-        //    // Using reflection to get the actual value of the property
-        //    PropertyInfo propertyInfo = inputClassColumnInstance.GetType().GetProperty(columnName);
-        //    if (propertyInfo == null)
-        //        throw new InvalidOperationException($"No property named '{columnName}' found on inputClassColumnInstance");
 
-        //    var actualValue = propertyInfo.GetValue(inputClassColumnInstance).ToString();
+        [AfterScenario]
+        public void ResetChangedValues()
+        {
+            WhenIUpdateTheBlankOfABlankWithValueBlank(globalClass, globalColumn, globalOriginalValue);
+        }
 
-        //    Assert.That(actualValue, Is.EqualTo(value));
-        //}
     }
 }
