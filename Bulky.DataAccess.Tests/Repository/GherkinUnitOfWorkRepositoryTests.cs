@@ -25,6 +25,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
         private string globalClass;
         private string globalColumn;
         private string globalOriginalValue;
+        dynamic repoInstance;
 
         [BeforeFeature]
         public static void Setup()
@@ -51,37 +52,8 @@ namespace BulkyBook.DataAccess.Tests.Repository
         public void GivenIHaveAnInstanceOfBlankAtBlankWithAValueOfBlank(string className, string columnName, string value)
         {
             globalOriginalValue = value;
-            // is the given class a valid property of UnitOfWork?
-            var repoProperty = _unitOfWork.GetType().GetProperty(className);
-            if (repoProperty == null)
-                throw new InvalidOperationException($"No property named '{className}' found on unitOfWork");
-
-            // grab the value of the property we just grabbed (_unitOfWork.ClassName)
-            repo = repoProperty.GetValue(_unitOfWork);
-            Type repoType = repo.GetType();
-            Type entityType = repoType.GetInterfaces()
-                .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRepository<>))
-                ?.GetGenericArguments()[0];
-
-            if (entityType == null)
-            {
-                throw new InvalidOperationException("Could not determine entity type from repository.");
-            }
-
-            // Construct the lambda
-            var entityParam = Expression.Parameter(entityType, "entity");
-            var propertyAccess = Expression.PropertyOrField(entityParam, columnName);
-            var equalityCheck = Expression.Equal(propertyAccess, Expression.Constant(value, propertyAccess.Type));
-            var lambdaType = typeof(Func<,>).MakeGenericType(entityType, typeof(bool));
-            var lambda = Expression.Lambda(lambdaType, equalityCheck, entityParam);
-            // Instead of searching directly on the repoType, we search on the IRepository<T> interface
-            var iRepoType = typeof(Repository<>).MakeGenericType(entityType);
-            MethodInfo getMethod = repo.GetType().GetMethod("Get", new[] { typeof(Expression<>).MakeGenericType(typeof(Func<,>).MakeGenericType(entityType, typeof(bool))), typeof(string), typeof(bool) });
-            if (getMethod == null)
-            {
-                throw new InvalidOperationException($"The Get method could not be found on the {iRepoType.Name} type.");
-            }
-            inputClassColumnInstance = getMethod.Invoke(repo, new object[] { lambda, null, false });
+            
+            inputClassColumnInstance = FetchInstanceFromUnitOfWork(className, columnName, value);
             if (inputClassColumnInstance == null)
             {
                 throw new InvalidOperationException($"The repo has no item under the given filter. (repo.class.get() came back as null)");
@@ -104,7 +76,7 @@ namespace BulkyBook.DataAccess.Tests.Repository
             globalColumn = columnName;
             // Determine the entity type from the repository
             Type entityType = null;
-            Type[] interfaces = repo.GetType().GetInterfaces();
+            Type[] interfaces = repoInstance.GetType().GetInterfaces();
 
             foreach (var interfaceType in interfaces)
             {
@@ -136,13 +108,13 @@ namespace BulkyBook.DataAccess.Tests.Repository
 
             if (inputClassColumnInstance.GetType() == expectedType)
             {
-                MethodInfo updateMethod = repo.GetType().GetMethod("Update", new Type[] { expectedType });
+                MethodInfo updateMethod = repoInstance.GetType().GetMethod("Update", new Type[] { expectedType });
                 if (updateMethod == null)
                 {
                     throw new InvalidOperationException($"The 'Update' method for type '{className}' could not be found on the repository.");
                 }
 
-                updateMethod.Invoke(repo, new object[] { inputClassColumnInstance });
+                updateMethod.Invoke(repoInstance, new object[] { inputClassColumnInstance });
             }
             else
             {
@@ -178,10 +150,10 @@ namespace BulkyBook.DataAccess.Tests.Repository
             if (repoProperty == null)
                 throw new InvalidOperationException($"No property named '{className}' found on unitOfWork");
 
-            dynamic repoInstance = repoProperty.GetValue(_unitOfWork);
+            repoInstance = repoProperty.GetValue(_unitOfWork);
 
 
-            Type repoType = repo.GetType();
+            Type repoType = repoInstance.GetType();
             Type entityType = repoType.GetInterfaces()
                 .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRepository<>))
                 ?.GetGenericArguments()[0];
