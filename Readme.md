@@ -1,5 +1,5 @@
-# Please refer to the TESTING branch for testing explanation
-https://github.com/nicholascallee/DotNetTutorial/tree/Testing
+## Please refer to the TESTING branch for testing explanation
+[Testing Branch](https://github.com/nicholascallee/DotNetTutorial/tree/Testing)
 
 
 https://www.udemy.com/course/complete-aspnet-core-21-course/
