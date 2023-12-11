@@ -9,8 +9,8 @@
 **Files to Test:**
 
 -   `ApplicationDbContext.cs` - Test its usage within repositories.
--   `UnitOfWork.cs` - Containing all the **Repository** files, e.g., `ProductRepository.cs`, `CategoryRepository.cs`, etc.
-  -   [image](https://github.com/nicholascallee/DotNetTutorial/assets/141438641/2a7ce0c7-d1ac-4d39-ada7-21c696860d37)
+-   `UnitOfWork.cs` - Containing all the **Repository** files, e.g., `ProductRepository.cs`, `CategoryRepository.cs`, etc.##
+  -   ![image](https://github.com/nicholascallee/DotNetTutorial/assets/141438641/2a7ce0c7-d1ac-4d39-ada7-21c696860d37)
 -   `DBInitializer.cs` - Test to verify that initialization is correct.
 
 **Test Organization:**
